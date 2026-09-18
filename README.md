@@ -1,6 +1,6 @@
 # INF 601 - Mini Project 3
 
-A small Pandas and Matplotlib project that answers one question with public data:
+A small Pandas and Matplotlib project that answers a question with a public dataset:
 which software vendors show up most often in CISA's catalog of vulnerabilities that
 attackers are actively exploiting. The script downloads the catalog, loads it into a
 Pandas DataFrame, prints the top 5 vendors, and saves a bar chart of the result.
@@ -26,9 +26,7 @@ As of 2026-09-18 (1,716 vulnerabilities in the catalog):
 | 4 | Adobe | 81 | 4.7% |
 | 5 | Google | 75 | 4.4% |
 
-Microsoft has nearly four times as many exploited vulnerabilities as the next vendor.
-CISA adds to the catalog regularly, so these numbers change over time. The script
-always downloads the latest version.
+This information is subject to change as the file is updated and new information is retrieved. 
 
 ## Setup
 
@@ -100,15 +98,13 @@ the dataset, and the chart design, including the 100% comparison bar.
 
 | Date | Tool | What it did |
 | --- | --- | --- |
-| 2026-09-18 | Claude Code (Opus 5) | Recommended data.gov telecom/IT datasets; I chose the CISA KEV catalog. |
+| 2026-09-18 | Claude Code (Opus 5) | Researched data.gov telecom/IT datasets. User chose the CISA KEV catalog. |
 | 2026-09-18 | Claude Code (Opus 5) | Wrote the data loading section of `main.py`: the `pandas` import, the `KEV_CSV_URL` constant, loading the CSV into the `kev_df` DataFrame with parsed date columns, and the printed sanity check. |
 | 2026-09-18 | Claude Code (Opus 5) | Created `requirements.txt` (pinned from `pip freeze`) and `.gitignore` (copied from my Mini Project 2; ignores `.venv/`, `__pycache__/`, and `charts/`). |
 | 2026-09-18 | Claude Code (Opus 5) | Wrote the top 5 vendors section of `main.py` (`value_counts()` on `vendorProject`, printed with each vendor's share of the catalog) and added the Question and Answer sections to the README. |
 | 2026-09-18 | Claude Code (Opus 5) | Wrote the chart section of `main.py`: a horizontal bar chart of the top 5 vendors by share of the catalog, with a gray "All vendors" 100% bar at the bottom for comparison, saved to `charts/top_vendors.png`. Added `matplotlib` to `requirements.txt`. |
 | 2026-09-18 | Claude Code (Opus 5) | Updated the catalog count in the Answer section and wrote the rest of the README (description, Setup, Running, Chart, Structure, and the AI Usage summary). |
-| 2026-09-18 | Claude Code (Opus 5) | Created the `.venv` and installed `requirements.txt`; removed the empty "What I wrote myself" and "What I changed in AI-generated code" README sections. |
 | 2026-09-18 | Claude Code (Opus 5) | Removed the data check printout from `main.py` and shortened the code comments in every section. |
-| 2026-09-18 | Claude Code (Opus 5) | Added back the "What I wrote myself" and "What I changed in AI-generated code" sections with my answers. |
 
 ### What I wrote myself
 
@@ -116,4 +112,4 @@ I wrote the base template myself by copying it over from my previous projects.
 
 ### What I changed in AI-generated code
 
-There were no changes to the AI-generated code.
+Minor changes to the README for grammar and wording choices. 
