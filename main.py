@@ -24,3 +24,14 @@ print("\nColumns and data types:")
 print(kev_df.dtypes)
 print("\nFirst 5 rows:")
 print(kev_df[["cveID", "vendorProject", "product", "dateAdded", "knownRansomwareCampaignUse"]].head())
+
+# Question: Which vendors have the most known exploited vulnerabilities?
+# Count how many catalog entries belong to each vendor, then keep the top 5.
+# value_counts() already sorts from most to least, so head() gives the leaders.
+TOP_N = 5
+top_vendors = kev_df["vendorProject"].value_counts().head(TOP_N)
+
+print(f"\nTop {TOP_N} vendors by known exploited vulnerabilities:")
+for rank, (vendor, count) in enumerate(top_vendors.items(), start=1):
+    share = count / len(kev_df) * 100
+    print(f"{rank}. {vendor}: {count} ({share:.1f}% of the catalog)")
