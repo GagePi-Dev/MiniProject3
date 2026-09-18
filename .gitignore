@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Generated chart output
+charts/
+
+# Editor / OS cruft
+.vscode/
+.idea/
+*.swp
+.DS_Store
