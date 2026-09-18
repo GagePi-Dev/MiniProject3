@@ -108,3 +108,12 @@ the dataset, and the chart design, including the 100% comparison bar.
 | 2026-09-18 | Claude Code (Opus 5) | Updated the catalog count in the Answer section and wrote the rest of the README (description, Setup, Running, Chart, Structure, and the AI Usage summary). |
 | 2026-09-18 | Claude Code (Opus 5) | Created the `.venv` and installed `requirements.txt`; removed the empty "What I wrote myself" and "What I changed in AI-generated code" README sections. |
 | 2026-09-18 | Claude Code (Opus 5) | Removed the data check printout from `main.py` and shortened the code comments in every section. |
+| 2026-09-18 | Claude Code (Opus 5) | Added back the "What I wrote myself" and "What I changed in AI-generated code" sections with my answers. |
+
+### What I wrote myself
+
+I wrote the base template myself by copying it over from my previous projects.
+
+### What I changed in AI-generated code
+
+There were no changes to the AI-generated code.
