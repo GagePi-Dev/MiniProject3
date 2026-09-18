@@ -7,40 +7,24 @@ import os
 
 import matplotlib
 
-# The Agg backend draws straight to a file, which is all this program needs
-# since the chart is saved as a PNG instead of opened in a window.
+# Agg backend saves charts to files without opening a window.
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# CISA Known Exploited Vulnerabilities (KEV) catalog, published as a single CSV
-# and listed on data.gov. It is downloaded fresh on every run so the numbers are
-# always current and no data file has to be committed. (Requirement #3)
+# CISA Known Exploited Vulnerabilities catalog from data.gov, downloaded fresh each run. (Requirement #3)
 KEV_CSV_URL = "https://www.cisa.gov/sites/default/files/csv/known_exploited_vulnerabilities.csv"
 
-# Download the catalog straight into a Pandas DataFrame. Each row is one
-# vulnerability and each column is one field from the catalog. The two date
-# columns are parsed as real dates so they can be grouped by year or month
-# later on. (Requirement #4)
+# Load the catalog into a DataFrame, one row per vulnerability. (Requirement #4)
 kev_df = pd.read_csv(KEV_CSV_URL, parse_dates=["dateAdded", "dueDate"])
 
-# Quick check that the data came back the way it was expected.
-print(f"Downloaded {len(kev_df)} known exploited vulnerabilities from CISA.")
-print(f"DataFrame shape: {kev_df.shape} (rows = vulnerabilities, columns = fields)")
-print(f"Date range: {kev_df['dateAdded'].min():%Y-%m-%d} to {kev_df['dateAdded'].max():%Y-%m-%d}")
-print("\nColumns and data types:")
-print(kev_df.dtypes)
-print("\nFirst 5 rows:")
-print(kev_df[["cveID", "vendorProject", "product", "dateAdded", "knownRansomwareCampaignUse"]].head())
-
 # Question: Which vendors have the most known exploited vulnerabilities?
-# Count how many catalog entries belong to each vendor, then keep the top 5.
-# value_counts() already sorts from most to least, so head() gives the leaders.
+# value_counts() sorts from most to least, so head() gives the top vendors.
 TOP_N = 5
 top_vendors = kev_df["vendorProject"].value_counts().head(TOP_N)
 
-print(f"\nTop {TOP_N} vendors by known exploited vulnerabilities:")
+print(f"Top {TOP_N} vendors by known exploited vulnerabilities:")
 for rank, (vendor, count) in enumerate(top_vendors.items(), start=1):
     share = count / len(kev_df) * 100
     print(f"{rank}. {vendor}: {count} ({share:.1f}% of the catalog)")
@@ -49,24 +33,20 @@ for rank, (vendor, count) in enumerate(top_vendors.items(), start=1):
 # Chart - top vendors compared to the whole catalog (Requirements #5 and #6)
 # ---------------------------------------------------------------------------
 
-# Folder the finished PNG chart is written to. It is created on each run and is
-# listed in .gitignore so the image stays out of the repository.
+# Output folder, created on run and ignored by git.
 CHART_DIR = "charts"
 
-# Vendor bars share one color. The comparison bar is a neutral gray so it reads
-# as the reference, not as another vendor.
+# Blue for vendors, gray for the 100% comparison bar.
 VENDOR_COLOR = "#2a78d6"
 TOTAL_COLOR = "#b5b3ad"
 
-# Text and grid colors, kept muted so the data stays the loudest thing on the
-# chart.
+# Muted text and grid colors.
 INK = "#0b0b0b"
 INK_SOFT = "#52514e"
 GRID = "#dedcd6"
 BACKGROUND = "#fcfcfb"
 
-# Build the rows to plot: the top vendors, then one extra row for the entire
-# catalog, which is the 100% bar the vendors are compared against.
+# Top vendors plus an "All vendors" row for the 100% bar.
 chart_df = top_vendors.rename("count").to_frame()
 chart_df.loc["All vendors"] = len(kev_df)
 chart_df["share"] = chart_df["count"] / len(kev_df) * 100
@@ -76,19 +56,17 @@ figure, ax = plt.subplots(figsize=(11, 5))
 figure.patch.set_facecolor(BACKGROUND)
 ax.set_facecolor(BACKGROUND)
 
-# Horizontal bars read top to bottom, so the rows are reversed to put the #1
-# vendor at the top and the 100% bar at the bottom.
+# Reversed so the #1 vendor is on top and the 100% bar is on the bottom.
 plot_df = chart_df.iloc[::-1]
 bars = ax.barh(plot_df.index, plot_df["share"], color=plot_df["color"],
                height=0.6, zorder=2)
 
-# Label each bar with its count and share so the exact numbers are readable
-# without estimating from the axis.
+# Count and share label on each bar.
 for bar, (count, share) in zip(bars, plot_df[["count", "share"]].itertuples(index=False)):
     ax.annotate(f" {count:,}  ({share:.1f}%)", (bar.get_width(), bar.get_y() + bar.get_height() / 2),
                 va="center", fontsize=9, color=INK)
 
-# A thin divider separates the vendor bars from the comparison bar.
+# Divider between the vendor bars and the 100% bar.
 ax.axhline(0.5, color=GRID, linewidth=1, zorder=1)
 
 ax.set_xlim(0, 115)

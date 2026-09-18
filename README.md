@@ -53,8 +53,7 @@ python main.py
 
 The script:
 
-1. Downloads the KEV catalog into a Pandas DataFrame (`kev_df`) and prints a quick
-   check of the data: row count, shape, date range, column types, and the first 5 rows.
+1. Downloads the KEV catalog into a Pandas DataFrame (`kev_df`).
 2. Counts the entries for each vendor and prints the top 5 with each vendor's share of
    the catalog.
 3. Saves a bar chart to `charts/top_vendors.png`.
@@ -107,11 +106,5 @@ the dataset, and the chart design, including the 100% comparison bar.
 | 2026-09-18 | Claude Code (Opus 5) | Wrote the top 5 vendors section of `main.py` (`value_counts()` on `vendorProject`, printed with each vendor's share of the catalog) and added the Question and Answer sections to the README. |
 | 2026-09-18 | Claude Code (Opus 5) | Wrote the chart section of `main.py`: a horizontal bar chart of the top 5 vendors by share of the catalog, with a gray "All vendors" 100% bar at the bottom for comparison, saved to `charts/top_vendors.png`. Added `matplotlib` to `requirements.txt`. |
 | 2026-09-18 | Claude Code (Opus 5) | Updated the catalog count in the Answer section and wrote the rest of the README (description, Setup, Running, Chart, Structure, and the AI Usage summary). |
-
-### What I wrote myself
-
-_To be filled in._
-
-### What I changed in AI-generated code
-
-_To be filled in._
+| 2026-09-18 | Claude Code (Opus 5) | Created the `.venv` and installed `requirements.txt`; removed the empty "What I wrote myself" and "What I changed in AI-generated code" README sections. |
+| 2026-09-18 | Claude Code (Opus 5) | Removed the data check printout from `main.py` and shortened the code comments in every section. |
